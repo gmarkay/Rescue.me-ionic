@@ -1,0 +1,10 @@
+<div ng-include src="'templates/navbar.html'"></div>
+<ion-view title='map'>
+  <ion-content>
+      <button ng-click='center()'>Find Me</button>
+      <button ng-click='calcRoute()'>Route me</button>
+      <button ng-click='sendNot()'>Please work</button>
+      <div id="map" data-tap-disabled="true"></div>
+      <div id="directionsPanel" style="float:right;width:30%;height:100%"></div>
+  </ion-content>
+</ion-view>

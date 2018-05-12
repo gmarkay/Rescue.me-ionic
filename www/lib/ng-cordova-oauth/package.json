@@ -1,0 +1,67 @@
+{
+  "_from": "ng-cordova-oauth",
+  "_id": "ng-cordova-oauth@0.3.0",
+  "_inBundle": false,
+  "_integrity": "sha1-gNb4gzsizp1qf0ik7DsVSpTzAYo=",
+  "_location": "/ng-cordova-oauth",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "ng-cordova-oauth",
+    "name": "ng-cordova-oauth",
+    "escapedName": "ng-cordova-oauth",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ng-cordova-oauth/-/ng-cordova-oauth-0.3.0.tgz",
+  "_shasum": "80d6f8833b22ce9d6a7f48a4ec3b154a94f3018a",
+  "_spec": "ng-cordova-oauth",
+  "_where": "/Users/griffin/Desktop/Workspace/capstone",
+  "author": {
+    "name": "Nic Raboy",
+    "url": "https://www.nraboy.com"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "angular": "1.5.7"
+  },
+  "deprecated": false,
+  "description": "Connect to Oauth providers using Apache Cordova and the InAppBrowser plugin",
+  "devDependencies": {
+    "angular-mocks": "1.5.7",
+    "grunt": "1.0.1",
+    "grunt-contrib-clean": "1.0.0",
+    "grunt-contrib-concat": "1.0.1",
+    "grunt-contrib-jshint": "1.0.0",
+    "grunt-contrib-uglify": "1.0.1",
+    "grunt-karma": "2.0.0",
+    "jasmine-core": "2.4.1",
+    "jssha": "1.6.0",
+    "karma": "1.1.0",
+    "karma-coverage": "1.0.0",
+    "karma-jasmine": "1.0.2",
+    "karma-phantomjs-launcher": "1.0.1",
+    "phantomjs-prebuilt": "2.1.7"
+  },
+  "homepage": "https://www.thepolyglotdeveloper.com",
+  "keywords": [
+    "angularjs",
+    "oauth",
+    "api",
+    "apache cordova",
+    "phonegap",
+    "ionic framework"
+  ],
+  "license": "MIT",
+  "name": "ng-cordova-oauth",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "version": "0.3.0"
+}

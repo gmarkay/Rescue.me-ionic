@@ -14,6 +14,21 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
+#map {
+  width: 100%  !important
+  ;
+  height: 100%  !important
+  ;
+}
+.scroll {
+  height: 100%  !important;
+}
+#loginBtn{
+  width: 44%;
+  height: 31%;
+  margin-top: 35%;
+  margin-left: 27%;
+}
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
