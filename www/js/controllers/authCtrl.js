@@ -9,9 +9,9 @@ angular.module("AAAA").controller("AuthCtrl", function ($scope, $rootScope, $loc
           .then(userData => {
             $rootScope.currentUser = userData.data;
             $rootScope.cu_id = userData.data.id;
-            $cordovaInAppBrowser.close();
+            // $cordovaInAppBrowser.close();
             $location.path('/home');
-          });
+          })
       })
   }
 });

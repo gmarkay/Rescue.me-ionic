@@ -34,7 +34,6 @@ angular.module('AAAA').controller('MapCtrl', function (MapFactory, $scope, $root
     if ($rootScope.currentUser.default_lat) {
       let lat = $rootScope.currentUser.default_lat;
       let lng = $rootScope.currentUser.default_lng;
-      location = (lat, lng)
       location = new google.maps.LatLng(lat, lng)
       $scope.locToken = 'choseLoc';
     } else {
