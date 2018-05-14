@@ -1,13 +1,24 @@
-angular.module("AAAA").factory("HomeFactory", function ($http) {
+'use strict';
+
+angular.module("AAAA").factory("HomeFactory", function ($http, $rootScope, apiUrl) {
 
   function getVehicles() {
-    return $http.get('https://ad449109.ngrok.io/vehicles')
+    return $http({
+      method: 'GET',
+      url: `${apiUrl}/vehicles`,
+      params: { userId: $rootScope.cu_id }
+    });
   }
 
   function postVehicle(carData) {
-    console.log(carData, 'here')
-    return $http.post('https://ad449109.ngrok.io/newCar', carData)
+    return $http({
+      method: 'POST',
+      url: `${apiUrl}/newCar`,
+      data: carData,
+      params:{userId: $rootScope.cu_id}
+    });
   }
+
   return {
     getVehicles,
     postVehicle

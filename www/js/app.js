@@ -1,15 +1,8 @@
-angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
+'use strict';
 
-  .run(function ($ionicPlatform) {
-    $ionicPlatform.ready(function () {
-      // if(window.StatusBar) {
-      //   StatusBar.styleDefault();
-      // }
-      if (window.cordova && window.cordova.plugins.notification.local) {
-        console.log('ready')
-      }
-    });
-  })
+
+angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
+  .constant('apiUrl', 'https://8928b0b6.ngrok.io')
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
@@ -49,6 +42,15 @@ angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
         }
       });
     $urlRouterProvider.otherwise('/home');
-
+  })
+  .run(function ($ionicPlatform) {
+    $ionicPlatform.ready(function () {
+      // if(window.StatusBar) {
+      //   StatusBar.styleDefault();
+      // }
+      if (window.cordova && window.cordova.plugins.notification.local) {
+        console.log('ready')
+      }
+    });
   });
 

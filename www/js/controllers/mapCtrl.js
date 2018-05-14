@@ -113,13 +113,13 @@ angular.module('AAAA').controller('MapCtrl', function (MapFactory, $scope, $root
     });
   }
 
-
   $scope.setDefLocation = () => {
     MapFactory.addDefaultLocation($scope.lat, $scope.lng)
       .then(location => {
       })
       $scope.infoWindow.close();
   }
+
 
   const locCircle = (newLoc) => {
     let areaCircle = new google.maps.Circle({
