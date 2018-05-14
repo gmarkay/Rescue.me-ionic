@@ -2,9 +2,35 @@
 <ion-view title='profile'>
   <ion-content>
     <h1 class='what'>{{message}}</h1>
-    <p> {{user.id}}</p>
-    <p> {{user.display_name}}</p>
+    <div>
+      <p> {{user.id}}</p>
+      <p> {{user.display_name}}</p>
+    </div>
+    <button ng-click='newVehicle()'>Add a Vehicle</button>
+    <div class="list list-inset" id='carForm' ng-show='showCarForm'>
+      <label class="item item-input">
+        <input type="text" ng-model='newCar.make' placeholder="Make">
+      </label>
+      <label class="item item-input">
+        <input type="text" ng-model='newCar.model' placeholder="Model">
+      </label>
+      <label class="item item-input">
+        <input type="text" ng-model='newCar.color' placeholder="Color">
+      </label>
+      <label class="item item-input">
+        <input type="text" ng-model='newCar.plateNumber' placeholder="License Plate Number">
+      </label>
+      <button class="button button-positive" ng-click='submitCar()'> Submit Car</button>
 
+    </div>
+    <div>
+
+      <button ng-click='showCars()'>Show My Vehicles</button>
+      <div id='cars' ng-show='showVehicles'>
+        <ul>
+          <li ng-repeat='car in cars'>{{car.color}}, {{car.make}} {{car.model}}</li>
+        </ul>
+      </div>
   </ion-content>
 </ion-view>
 
