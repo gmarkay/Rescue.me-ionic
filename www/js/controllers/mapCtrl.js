@@ -1,19 +1,16 @@
 'use strict';
 
-angular.module('AAAA').controller('MapCtrl', function (MapFactory, $scope, $rootScope, $timeout, $compile, $ionicLoading, $cordovaLocalNotification, $cordovaGeolocation, $cordovaLaunchNavigator, $ionicPlatform) {
+angular.module('AAAA').controller('MapCtrl', function (MapFactory, $scope, $interval, $rootScope, $timeout, $compile, $ionicLoading, $cordovaLocalNotification, $cordovaGeolocation, $cordovaLaunchNavigator, $ionicPlatform) {
   $scope.locToken;
 
   $ionicPlatform.ready(function () {
-    $scope.sendNot = () => {
-      $scope.place = new google.maps.LatLng(42.161049, -95.777223);
+    $scope.notification = () => {
+      // $scope.place = new google.maps.LatLng($scope.incident_lat, $scope.incident_lng);
       $cordovaLocalNotification.schedule({
         id: 1,
         title: 'Accident',
-        text: 'There was an accident',
-        foreground: true,
-        data: {
-          destination: $scope.place
-        }
+        text: `There was an accident`,
+        foreground: true
       }).then(function () {
         console.log('Notification triggered');
       });
@@ -21,25 +18,20 @@ angular.module('AAAA').controller('MapCtrl', function (MapFactory, $scope, $root
   })
 
   $scope.$on("$cordovaLocalNotification:click", function (notification, state) {
-    alert(" was clicked");
     if (state.id = 1) {
-      let accLocation = new google.maps.LatLng(state.data.destination);
-      console.log(accLocation, 'acclocation');
-      locCircle(accLocation);
+      MapFactory.closeNotification($scope.incidentId);
+      locCircle();
     }
   });
 
   function init() {
-    let location
+    let location;
+    $scope.locToken = 'defLoc';
     if ($rootScope.currentUser.default_lat) {
-      let lat = $rootScope.currentUser.default_lat;
-      let lng = $rootScope.currentUser.default_lng;
-      location = new google.maps.LatLng(lat, lng)
-      $scope.locToken = 'choseLoc';
+      location = new google.maps.LatLng($rootScope.currentUser.default_lat, $rootScope.currentUser.default_lng)
     } else {
       location = new google.maps.LatLng(36.161049, -86.777223);
-      $scope.locToken = 'defLoc'
-    } 
+    }
     let mapOptions = {
       center: location,
       zoom: 12,
@@ -58,17 +50,41 @@ angular.module('AAAA').controller('MapCtrl', function (MapFactory, $scope, $root
       showBackdrop: false
     });
     navigator.geolocation.getCurrentPosition(function (pos) {
-      console.log('Got pos', pos);
-      $scope.myLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-      $scope.map.setCenter($scope.myLocation);
-      $scope.locToken = 'myLoc'
-      pinLocation($scope.myLocation);
+      let newLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      $scope.locToken = 'myLoc';
+      $scope.marker.setMap(null);
+      pinLocation(newLocation);
+      $scope.map.setCenter(newLocation);
       $scope.loading.hide();
     }, function (error) {
       alert('Unable to get location: ' + error.message);
     });
   };
 
+  $interval(getMyPosition, 10000);
+
+  function getMyPosition() {
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      console.log('Got pos', pos);
+      $scope.myLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      MapFactory.addCurrentLocation(pos.coords.latitude, pos.coords.longitude)
+        .then(data => {
+          if (data.length > 0) {
+            data.forEach(incident => {
+              console.log(incident.location_lat, 'in loop');
+              $scope.description = incident.description;
+              $scope.locDescription = incident.locationDescription;
+              $scope.incident_lat = parseFloat(incident.location_lat);
+              $scope.incident_lng = parseFloat(incident.location_lng);
+              $scope.incidentId = incident.id;
+              $scope.notification();
+            })
+          }
+        });
+    }, function (error) {
+      alert('Unable to get location: ' + error.message);
+    });
+  };
 
   const pinLocation = (location) => {
     $scope.marker = new google.maps.Marker({
@@ -84,24 +100,18 @@ angular.module('AAAA').controller('MapCtrl', function (MapFactory, $scope, $root
     tokenSwitch();
   };
 
-  const tokenSwitch =()=>{
-    switch ($scope.locToken){
-      case 'choseLoc': 
-        console.log('chose location');
-        break;
+  const tokenSwitch = () => {
+    switch ($scope.locToken) {
       case 'defLoc':
-      console.log('new location');
+        console.log('new location');
         newDefLocation();
         break;
-      case'myLoc':
+      case 'myLoc':
         console.log('my location');
     }
   };
 
   let newDefLocation = () => {
-    $scope.infoWindow.setContent("drag the marker to your desired default location")
-    $scope.infoWindow.open($scope.map, $scope.marker);
-
     google.maps.event.addListener($scope.marker, 'dragend', function () {
       $scope.lat = $scope.marker.getPosition().lat();
       $scope.lng = $scope.marker.getPosition().lng();
@@ -114,32 +124,51 @@ angular.module('AAAA').controller('MapCtrl', function (MapFactory, $scope, $root
 
   $scope.setDefLocation = () => {
     MapFactory.addDefaultLocation($scope.lat, $scope.lng)
-      .then(location => {
-      })
-      $scope.infoWindow.close();
-  }
+      .then(location => {})
+    $scope.infoWindow.close();
+  };
 
 
-  const locCircle = (newLoc) => {
-    let areaCircle = new google.maps.Circle({
-      strokeColor: '#FF0000',
+  const locCircle = () => {
+    let incidentLocation = new google.maps.LatLng($scope.incident_lat, $scope.incident_lng);
+
+    const areaCircle = new google.maps.Circle({
+      strokeColor: '#00000',
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: '#FF0000',
+      clickable: true,
+      fillColor: '#8000ff',
       fillOpacity: 0.35,
       map: $scope.map,
       center: {
-        lat: 40.714,
-        lng: -74.005
+        lat: $scope.incident_lat,
+        lng: $scope.incident_lng
       },
-      radius: 500
+      radius: 1000
     })
+    $scope.map.setCenter(incidentLocation);
+
+    $scope.infoWindow = new google.maps.InfoWindow({
+      content: ""
+    });
+    google.maps.event.addListener(areaCircle, 'click', function (ev) {
+      let circleHtml = `<div>${$scope.description} ${$scope.locDescription}<br><button ng-click='accept()'>Accept?</button><div>`
+      let compiled = $compile(circleHtml)($scope);
+      $scope.infoWindow.setContent(compiled[0]);
+      $scope.infoWindow.setPosition(areaCircle.getCenter());
+      $scope.infoWindow.open($scope.map);
+    });
+
   };
 
-  $scope.calcRoute = () => {
-    var destination = [36.161049, -86.777223];
-    var start = $scope,
-      myLocation;
+  $scope.accept = () => {
+    console.log('this button click worked');
+    calcRoute();
+  }
+
+  const calcRoute = () => {
+    var destination = [$scope.incident_lat, $scope.incident_lng];
+    var start = $scope.myLocation;
 
     $cordovaLaunchNavigator.navigate(destination, start).then(function () {
       console.log("Navigator launched");

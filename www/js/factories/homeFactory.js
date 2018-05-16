@@ -1,27 +1,19 @@
-'use strict';
-
 angular.module("AAAA").factory("HomeFactory", function ($http, $rootScope, apiUrl) {
 
-  function getVehicles() {
-    return $http({
-      method: 'GET',
-      url: `${apiUrl}/vehicles`,
-      params: { userId: $rootScope.cu_id }
-    });
-  }
-
-  function postVehicle(carData) {
+  function newIncident(incidentData) {
+    console.log(incidentData, 'data in factory');
+    console.log($rootScope.cu_id, 'current user id in factory');
     return $http({
       method: 'POST',
-      url: `${apiUrl}/newCar`,
-      data: carData,
-      params:{userId: $rootScope.cu_id}
+      url: `${apiUrl}/newIncident`,
+      data: incidentData,
+      params:{UserId: $rootScope.cu_id}
     });
-  }
 
-  return {
-    getVehicles,
-    postVehicle
   }
-});
+  return {
+    newIncident
+  };
+})
+
 

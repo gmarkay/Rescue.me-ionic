@@ -1,8 +1,24 @@
+l
 <div ng-include src="'templates/navbar.html'"></div>
 <ion-view title='home'>
   <ion-content>
-    <h1>WELCOME TO THE APP</h1>
+    <button class="button button-large button-assertive" ng-click='incidentFormOpen = !incidentFormOpen' ng-hide='incidentFormOpen'>
+      I am in need of assistance
+    </button>
+    <div ng-show='incidentFormOpen' class="list list-inset" id='incidentForm'>
+      <label class="item item-input">
+        <textarea id='desc' ng-model='incident.description' placeholder="Describe Your Accident to the best of your ability:
+(e.g. 'My car has flipped and the engine is on fire')"></textarea>
+      </label>
+
+      <label class="item item-input">
+
+        <textarea id='locDesc' ng-model='incident.locationDescription' placeholder="Describe Your location, as specifically as possible 
+(e.g. highway 65 Northbound, 100 yards south exit 12, pulled to the right side of the road )"></textarea>
+      </label>
+      <button class="button button-assertive" ng-click='sendHelp()'>
+        Send Help
+      </button>
+      <!-- </div> -->
   </ion-content>
 </ion-view>
-
-

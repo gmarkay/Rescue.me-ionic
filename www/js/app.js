@@ -2,7 +2,7 @@
 
 
 angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
-  .constant('apiUrl', 'https://8928b0b6.ngrok.io')
+  .constant('apiUrl', 'https://8448e6d8.ngrok.io')
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
@@ -10,7 +10,7 @@ angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
         views: {
           home: {
             templateUrl: 'templates/home.html',
-            // controller: 'HomeCtrl'
+            controller: 'HomeCtrl'
           }
         }
       })
@@ -19,7 +19,7 @@ angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
         views: {
           profile: {
             templateUrl: 'templates/profile.html',
-            controller: 'HomeCtrl'
+            controller: 'ProfileCtrl'
           }
         }
       })
@@ -33,7 +33,7 @@ angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
         }
       })
       .state('login', {
-        url: '/login',
+        url: '/',
         views: {
           login: {
             templateUrl: 'templates/login.html',
@@ -41,7 +41,7 @@ angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
           }
         }
       });
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/');
   })
   .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
