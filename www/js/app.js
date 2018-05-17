@@ -2,7 +2,7 @@
 
 
 angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
-  .constant('apiUrl', 'https://8448e6d8.ngrok.io')
+  .constant('apiUrl', 'https://48d8f656.ngrok.io')
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {

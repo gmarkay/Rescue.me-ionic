@@ -18,7 +18,7 @@ angular.module('AAAA').controller('MapCtrl', function (MapFactory, $scope, $inte
   })
 
   $scope.$on("$cordovaLocalNotification:click", function (notification, state) {
-    if (state.id = 1) {
+    if (state.id =1) {
       MapFactory.closeNotification($scope.incidentId);
       locCircle();
     }
@@ -61,7 +61,7 @@ angular.module('AAAA').controller('MapCtrl', function (MapFactory, $scope, $inte
     });
   };
 
-  $interval(getMyPosition, 10000);
+  $interval(getMyPosition, 20000);
 
   function getMyPosition() {
     navigator.geolocation.getCurrentPosition(function (pos) {
@@ -130,8 +130,7 @@ angular.module('AAAA').controller('MapCtrl', function (MapFactory, $scope, $inte
 
 
   const locCircle = () => {
-    let incidentLocation = new google.maps.LatLng($scope.incident_lat, $scope.incident_lng);
-
+    let incidentLocation = new google.maps.LatLng($scope.incident_lat , $scope.incident_lng);                 
     const areaCircle = new google.maps.Circle({
       strokeColor: '#00000',
       strokeOpacity: 0.8,
@@ -148,15 +147,15 @@ angular.module('AAAA').controller('MapCtrl', function (MapFactory, $scope, $inte
     })
     $scope.map.setCenter(incidentLocation);
 
-    $scope.infoWindow = new google.maps.InfoWindow({
+    $scope.circleWindow = new google.maps.InfoWindow({
       content: ""
     });
     google.maps.event.addListener(areaCircle, 'click', function (ev) {
       let circleHtml = `<div>${$scope.description} ${$scope.locDescription}<br><button ng-click='accept()'>Accept?</button><div>`
       let compiled = $compile(circleHtml)($scope);
-      $scope.infoWindow.setContent(compiled[0]);
-      $scope.infoWindow.setPosition(areaCircle.getCenter());
-      $scope.infoWindow.open($scope.map);
+      $scope.circleWindow.setContent(compiled[0]);
+      $scope.circleWindow.setPosition(areaCircle.getCenter());
+      $scope.circleWindow.open($scope.map);
     });
 
   };
@@ -164,6 +163,8 @@ angular.module('AAAA').controller('MapCtrl', function (MapFactory, $scope, $inte
   $scope.accept = () => {
     console.log('this button click worked');
     calcRoute();
+    $scope.circleWindow.close();
+
   }
 
   const calcRoute = () => {

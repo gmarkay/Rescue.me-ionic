@@ -4,7 +4,6 @@ angular.module('AAAA').controller('HomeCtrl', function ($scope, HomeFactory, $lo
   $scope.incident = {};
 
   $scope.sendHelp = () => {
-
     navigator.geolocation.getCurrentPosition(function (pos) {
       console.log('Got pos', pos);
       $scope.incident.location_lat = pos.coords.latitude;
@@ -14,7 +13,6 @@ angular.module('AAAA').controller('HomeCtrl', function ($scope, HomeFactory, $lo
       HomeFactory.newIncident($scope.incident)
       .then(incident=>{
         alert("Your request for help was submitted, please await a response");
-
         console.log(incident, 'incident in return');
       })
 

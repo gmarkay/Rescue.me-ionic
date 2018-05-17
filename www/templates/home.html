@@ -2,7 +2,7 @@ l
 <div ng-include src="'templates/navbar.html'"></div>
 <ion-view title='home'>
   <ion-content>
-    <button class="button button-large button-assertive" ng-click='incidentFormOpen = !incidentFormOpen' ng-hide='incidentFormOpen'>
+    <button class="button button-large button-assertive" ng-click='incidentFormOpen = !incidentFormOpen; hideButton=true' ng-hide='hideButton'>
       I am in need of assistance
     </button>
     <div ng-show='incidentFormOpen' class="list list-inset" id='incidentForm'>
@@ -16,9 +16,9 @@ l
         <textarea id='locDesc' ng-model='incident.locationDescription' placeholder="Describe Your location, as specifically as possible 
 (e.g. highway 65 Northbound, 100 yards south exit 12, pulled to the right side of the road )"></textarea>
       </label>
-      <button class="button button-assertive" ng-click='sendHelp()'>
+      <button class="button button-assertive" ng-click='sendHelp(); incidentFormOpen=false'>
         Send Help
       </button>
-      <!-- </div> -->
+      </div>
   </ion-content>
 </ion-view>
