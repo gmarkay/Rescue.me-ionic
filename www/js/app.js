@@ -1,15 +1,8 @@
-angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
+'use strict';
 
-  .run(function ($ionicPlatform) {
-    $ionicPlatform.ready(function () {
-      // if(window.StatusBar) {
-      //   StatusBar.styleDefault();
-      // }
-      if (window.cordova && window.cordova.plugins.notification.local) {
-        console.log('ready')
-      }
-    });
-  })
+
+angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
+  .constant('apiUrl', 'https://48d8f656.ngrok.io')
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
@@ -17,7 +10,7 @@ angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
         views: {
           home: {
             templateUrl: 'templates/home.html',
-            // controller: 'HomeCtrl'
+            controller: 'HomeCtrl'
           }
         }
       })
@@ -26,7 +19,7 @@ angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
         views: {
           profile: {
             templateUrl: 'templates/profile.html',
-            controller: 'HomeCtrl'
+            controller: 'ProfileCtrl'
           }
         }
       })
@@ -40,7 +33,7 @@ angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
         }
       })
       .state('login', {
-        url: '/login',
+        url: '/',
         views: {
           login: {
             templateUrl: 'templates/login.html',
@@ -48,7 +41,16 @@ angular.module('AAAA', ['ionic', 'ionic.native', 'ngCordova', 'ngCordovaOauth'])
           }
         }
       });
-    $urlRouterProvider.otherwise('/home');
-
+    $urlRouterProvider.otherwise('/');
+  })
+  .run(function ($ionicPlatform) {
+    $ionicPlatform.ready(function () {
+      // if(window.StatusBar) {
+      //   StatusBar.styleDefault();
+      // }
+      if (window.cordova && window.cordova.plugins.notification.local) {
+        console.log('ready')
+      }
+    });
   });
 

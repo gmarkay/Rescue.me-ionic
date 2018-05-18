@@ -1,16 +1,17 @@
-angular.module("AAAA").controller("AuthCtrl", function ($scope, $rootScope, $location, $http, $cordovaOauth, $cordovaInAppBrowser) {
-  const authUrl = 'https://1d091214.ngrok.io/auth/facebook/callback';
+'use strict';
+
+angular.module("AAAA").controller("AuthCtrl", function ($scope, $rootScope, $location, $http, $cordovaOauth, $cordovaInAppBrowser, apiUrl) {
+  const authUrl = `${apiUrl}/auth/facebook/callback`;
   $scope.fbLogin = () => {
-    console.log('hello');
-    $cordovaInAppBrowser.open(authUrl, '_blank')
+      $cordovaInAppBrowser.open(authUrl, '_blank')
       .then(() => {
         $http.get(authUrl)
           .then(userData => {
-            let user = userData.data;
-            $rootScope.currentUser = user;
-            $cordovaInAppBrowser.close();
+            $rootScope.currentUser = userData.data;
+            $rootScope.cu_id = userData.data.id;
+            // $cordovaInAppBrowser.close();
             $location.path('/home');
-          });
+          })
       })
   }
 });
